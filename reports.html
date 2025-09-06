@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-xl font-bold">Auditing System - Reports</h1>
+    <div class="space-x-2 flex items-center">
+      <a href="dashboard.html" class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-sm">Home</a>
+      <a href="requests-list.html" class="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded text-sm">Back</a>
+      <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm">Logout</button>
+    </div>
+  </nav>
+
+  <main class="p-6 max-w-6xl mx-auto">
+
+    <h2 class="text-2xl font-bold mb-6">Generate Reports</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+
+      <!-- Filters Card -->
+      <section class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-4">Filters & Export</h3>
+
+        <div class="flex flex-wrap gap-4 items-center mb-4">
+          <!-- Status Filter -->
+          <select id="statusFilter" class="border p-2 rounded">
+            <option value="all">All Requests</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+
+          <!-- Start Date -->
+          <div class="flex items-center space-x-2">
+            <label for="startDate" class="text-sm font-medium">From:</label>
+            <input type="date" id="startDate" class="border p-2 rounded">
+          </div>
+
+          <!-- End Date -->
+          <div class="flex items-center space-x-2">
+            <label for="endDate" class="text-sm font-medium">To:</label>
+            <input type="date" id="endDate" class="border p-2 rounded">
+          </div>
+
+          <!-- Apply Filter Button -->
+          <button id="applyFilter" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
+            Apply
+          </button>
+
+          <!-- Export Button -->
+          <button id="exportBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm">
+            Download Excel
+          </button>
+        </div>
+      </section>
+
+      <!-- Report Table Card -->
+      <section class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition overflow-x-auto">
+        <h3 class="text-lg font-semibold mb-4">Preview Report</h3>
+
+        <!-- Loading indicator -->
+        <div id="tableLoading" class="hidden flex items-center justify-center py-4">
+          <svg class="animate-spin h-6 w-6 mr-2 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3h-4z"></path>
+          </svg>
+          Loading data...
+        </div>
+
+        <table class="w-full border text-left table-auto">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="p-2 border">User</th>
+              <th class="p-2 border">Amount</th>
+              <th class="p-2 border">Reason</th>
+              <th class="p-2 border">Status</th>
+              <th class="p-2 border">Date</th>
+              <th class="p-2 border">Money Taken By</th> <!-- NEW COLUMN -->
+            </tr>
+          </thead>
+          <tbody id="reportTable" class="divide-y"></tbody>
+        </table>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- SheetJS for Excel Export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+  <!-- Firebase Reports JS -->
+  <script type="module" src="./js/reports.js"></script>
+
+</body>
+</html>

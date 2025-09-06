@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard - Auditing System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">User Dashboard</h1>
+    <button id="logoutBtn" aria-label="Logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg">
+      Logout
+    </button>
+  </nav>
+
+  <main class="p-6 max-w-6xl mx-auto sm:p-4">
+    <!-- Two-column grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Fund Request Form -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg">
+        <h2 class="text-lg font-bold mb-4">Submit Fund Request</h2>
+        <form id="fundRequestForm" class="space-y-3">
+          <input type="number" id="fundAmount" required min="0" placeholder="Amount (₱)" 
+            class="w-full p-2 border rounded-lg">
+          <input type="text" id="fundReason" required maxlength="200" placeholder="Reason"
+            class="w-full p-2 border rounded-lg">
+          <button type="submit" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-full">
+            Submit
+          </button>
+        </form>
+      </div>
+      
+
+     <div class="bg-white p-6 rounded-2xl shadow-lg overflow-x-auto">
+  <h3 class="font-semibold text-gray-700 mb-4">My Fund Requests & Updates</h3>
+
+  <!-- Filter Row -->
+  <div class="mb-4 flex items-center gap-4">
+    <label for="statusFilter" class="font-semibold text-gray-700">Filter by Status:</label>
+    <select id="statusFilter" class="p-2 border rounded-lg">
+      <option value="all">All</option>
+      <option value="pending">Pending</option>
+      <option value="approved">Approved</option>
+      <option value="rejected">Rejected</option>
+    </select>
+  </div>
+
+  <table class="min-w-full border border-gray-200">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="p-2 border-b text-left">Amount</th>
+        <th class="p-2 border-b text-left">Reason</th>
+        <th class="p-2 border-b text-left">Status</th>
+        <th class="p-2 border-b text-left">Date Submitted</th>
+        <th class="p-2 border-b text-left">Money Taken By</th>
+      </tr>
+    </thead>
+    <tbody id="myFundRequests">
+      <tr>
+        <td colspan="5" class="text-gray-500 p-2 text-center">No fund requests submitted yet.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- Firebase + User Requests Script -->
+  <script type="module" src="js/user-requests.js"></script>
+</body>
+</html>

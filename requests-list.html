@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Manage Requests</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- Redesigned Navbar -->
+<nav class="bg-green-600 text-white px-6 py-4 flex justify-between items-center shadow-lg">
+  <!-- Logo / Title -->
+  <h1 class="text-xl font-bold tracking-wide">Auditing System - Admin</h1>
+
+  <!-- Navigation & Logout -->
+  <div class="flex items-center space-x-3">
+    <!-- Navigation Links -->
+    <a href="dashboard.html" 
+       class="bg-blue-500 hover:bg-blue-600 transition-colors duration-200 px-3 py-1 rounded text-sm font-medium">
+      Home
+    </a>
+    <a href="reports.html" 
+       class="bg-yellow-500 hover:bg-yellow-600 transition-colors duration-200 px-3 py-1 rounded text-sm font-medium">
+      Reports
+    </a>
+
+    <!-- Logout Button -->
+    <button id="logoutBtn" 
+            class="bg-red-500 hover:bg-red-600 transition-colors duration-200 px-3 py-1 rounded text-sm font-medium">
+      Logout
+    </button>
+  </div>
+</nav>
+
+
+  <!-- Dashboard Cards for Requests -->
+  <div class="p-6 max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Manage Fund Requests</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <!-- Pending Requests Card -->
+      <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">Pending Requests</h3>
+        <p class="text-gray-600 text-sm">Requests waiting for admin approval.</p>
+        <p id="pendingCount" class="text-xl font-bold mt-2 text-yellow-500">0</p>
+        <button id="viewPendingBtn" class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm">
+          View Requests
+        </button>
+      </div>
+
+      <!-- Approved Requests Card -->
+      <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">Approved Requests</h3>
+        <p class="text-gray-600 text-sm">Requests that have been approved.</p>
+        <p id="approvedCount" class="text-xl font-bold mt-2 text-green-500">0</p>
+        <button id="viewApprovedBtn" class="mt-2 w-full bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-sm">
+          View Requests
+        </button>
+      </div>
+
+      <!-- Rejected Requests Card -->
+      <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">Rejected Requests</h3>
+        <p class="text-gray-600 text-sm">Requests that were rejected.</p>
+        <p id="rejectedCount" class="text-xl font-bold mt-2 text-red-500">0</p>
+        <button id="viewRejectedBtn" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-sm">
+          View Requests
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Requests Lists Section (Hidden by default) -->
+  <div class="p-6 max-w-6xl mx-auto mt-6 space-y-6">
+
+    <!-- Pending Requests List -->
+    <div id="pendingListSection" class="hidden">
+      <h3 class="text-xl font-bold mb-2 text-yellow-500">Pending Requests</h3>
+      <ul id="pendingRequestsList" class="space-y-2"></ul>
+    </div>
+
+    <!-- Approved Requests List -->
+    <div id="approvedListSection" class="hidden">
+      <h3 class="text-xl font-bold mb-2 text-green-500">Approved Requests</h3>
+      <ul id="approvedRequestsList" class="space-y-2"></ul>
+    </div>
+
+    <!-- Rejected Requests List -->
+    <div id="rejectedListSection" class="hidden">
+      <h3 class="text-xl font-bold mb-2 text-red-500">Rejected Requests</h3>
+      <ul id="rejectedRequestsList" class="space-y-2"></ul>
+    </div>
+
+  </div>
+
+  <!-- Firebase Requests Logic -->
+  <script type="module" src="./js/requests-list.js"></script>
+
+  <script type="module">
+    // Toggle sections
+    const viewPendingBtn = document.getElementById("viewPendingBtn");
+    const viewApprovedBtn = document.getElementById("viewApprovedBtn");
+    const viewRejectedBtn = document.getElementById("viewRejectedBtn");
+
+    const pendingListSection = document.getElementById("pendingListSection");
+    const approvedListSection = document.getElementById("approvedListSection");
+    const rejectedListSection = document.getElementById("rejectedListSection");
+
+    function hideAllSections() {
+      pendingListSection.classList.add("hidden");
+      approvedListSection.classList.add("hidden");
+      rejectedListSection.classList.add("hidden");
+    }
+
+    function showSection(section) {
+      hideAllSections();
+      section.classList.remove("hidden");
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+
+    viewPendingBtn.addEventListener("click", () => showSection(pendingListSection));
+    viewApprovedBtn.addEventListener("click", () => showSection(approvedListSection));
+    viewRejectedBtn.addEventListener("click", () => showSection(rejectedListSection));
+  </script>
+</body>
+</html>

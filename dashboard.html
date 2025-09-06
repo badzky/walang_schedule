@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Auditing System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-lg md:text-xl font-bold">Auditing System</h1>
+    <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-lg text-sm md:text-base">
+      Logout
+    </button>
+  </nav>
+
+  <!-- Welcome Section -->
+  <div class="p-4 md:p-6 max-w-6xl mx-auto">
+    <h2 id="welcomeText" class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Welcome</h2>
+
+    <!-- Dashboard Grid 2x2 -->
+    <div id="dashboardGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+
+    
+
+  <!-- Card 2: Request Fund -->
+<div class="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white hover:shadow-xl transition transform hover:scale-105">
+  <!-- Icon + Title -->
+  <div class="flex items-center space-x-3">
+    <!-- Icon -->
+    <div class="bg-white/20 p-3 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V4m0 16v-4" />
+      </svg>
+    </div>
+    <h3 class="text-xl font-bold">Request Fund</h3>
+  </div>
+
+  <!-- Description -->
+  <p class="mt-2 text-sm text-green-100">
+    Submit a new fund request and track its approval status easily.
+  </p>
+
+  <!-- Button -->
+  <a href="request.html"
+     class="mt-4 inline-block w-full text-center bg-white text-green-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+    Request Now
+  </a>
+</div>
+    
+    
+
+
+
+
+    
+     <!-- Card 1: Fund Approved & Release -->
+<div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition relative">
+  <div class="flex items-center justify-between">
+    <h3 class="text-lg font-semibold text-gray-800">Fund Approved & Release</h3>
+  
+    <!-- Button to open modal -->
+    <button id="viewApprovedBtn" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm transition">
+      View Approved
+    </button>
+  </div>
+  <p class="text-gray-600 text-sm mt-1">Total approved funds for ECT department.</p>
+  <p id="myBalance" class="text-2xl font-bold mt-4 text-green-600">₱0</p>
+  <p id="remainingBalance" class="text-gray-700 text-lg mt-2">Remaining: ₱0</p>
+</div>
+
+
+<!-- Approved Requests Modal (Centered) -->
+<div id="approvedModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-3xl p-6 transform scale-95 transition-transform duration-200">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-semibold text-gray-800">Approved Fund Requests</h3>
+      <button id="closeApprovedModal" class="text-gray-400 hover:text-gray-700 text-3xl font-bold">&times;</button>
+    </div>
+
+    <!-- Table Container -->
+    <div class="overflow-x-auto rounded-lg border border-gray-200">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Amount</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Reason</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Taken By</th>
+          </tr>
+        </thead>
+        <tbody id="approvedRequestsBody" class="bg-white divide-y divide-gray-100">
+          <tr>
+            <td colspan="3" class="text-gray-400 text-center py-4">No approved requests yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- JS to toggle modal -->
+<script>
+const approvedModal = document.getElementById("approvedModal");
+const viewApprovedBtn = document.getElementById("viewApprovedBtn");
+const closeApprovedModal = document.getElementById("closeApprovedModal");
+
+viewApprovedBtn.addEventListener("click", () => {
+  approvedModal.classList.remove("hidden");
+});
+
+closeApprovedModal.addEventListener("click", () => {
+  approvedModal.classList.add("hidden");
+});
+
+// Optional: close modal when clicking outside content
+approvedModal.addEventListener("click", (e) => {
+  if (e.target === approvedModal) {
+    approvedModal.classList.add("hidden");
+  }
+});
+</script>
+
+
+
+
+
+
+
+<!-- Department Funds Card -->
+<div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+      <h3 class="font-semibold text-gray-700 text-lg sm:text-xl">Department Funds</h3>
+      <span id="totalDeptFunds" class="text-green-600 font-bold text-lg sm:text-xl">
+        Total: ₱0
+      </span>
+    </div>
+
+    <button id="addDeptFundsBtn" 
+            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-sm transition">
+      Add Funds
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto rounded-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-3 text-left text-sm font-medium text-gray-700">Amount</th>
+          <th class="p-3 text-left text-sm font-medium text-gray-700">Added By</th>
+          <th class="p-3 text-left text-sm font-medium text-gray-700">Reason / Note</th>
+          <th class="p-3 text-left text-sm font-medium text-gray-700">Date Added</th>
+        </tr>
+      </thead>
+      <tbody id="departmentFundsBody" class="bg-white divide-y divide-gray-200">
+        <tr>
+          <td colspan="4" class="text-gray-500 p-3 text-center">No funds added yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Add Department Funds Modal -->
+<div id="addDeptFundsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 sm:mx-0 p-6 relative">
+    
+    <!-- Close Button -->
+    <button id="closeDeptFunds" 
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold transition">&times;</button>
+    
+    <!-- Header -->
+    <div class="mb-4 text-center">
+      <h3 class="text-xl font-bold text-gray-800">Add Department Funds</h3>
+      <p class="text-gray-500 text-sm mt-1">Fill in the details below to add funds to the department.</p>
+    </div>
+    
+    <!-- Form -->
+    <form id="addDeptFundsForm" class="space-y-4">
+      <div>
+        <label for="deptFundAddedBy" class="block text-gray-600 text-sm mb-1">Added By <span class="text-red-500">*</span></label>
+        <input type="text" id="deptFundAddedBy" placeholder="Enter your name" required
+               class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none">
+      </div>
+
+      <div>
+        <label for="deptFundAmount" class="block text-gray-600 text-sm mb-1">Amount ₱ <span class="text-red-500">*</span></label>
+        <input type="number" id="deptFundAmount" placeholder="Enter amount" min="0" required
+               class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none">
+      </div>
+
+      <div>
+        <label for="deptFundReason" class="block text-gray-600 text-sm mb-1">Reason / Note</label>
+        <input type="text" id="deptFundReason" placeholder="Optional" 
+               class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none">
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end gap-2 mt-2">
+        <button type="button" id="cancelDeptFunds" 
+                class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+          Cancel
+        </button>
+        <button type="submit" 
+                class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition">
+          Add Funds
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Action Card for Viewing Requests -->
+<div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+  <div class="flex flex-col items-center">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Fund Requests</h3>
+
+    <a href="requests-list.html" 
+       class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition w-full max-w-md">
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      View Requests
+    </a>
+
+    <p class="text-gray-500 text-sm mt-3 text-center max-w-md">
+      Click the button to view all submitted fund requests along with their current status and details.
+    </p>
+  </div>
+</div>
+<!-- JS -->
+<script type="module" src="js/department-funds.js"></script>
+
+
+
+
+
+
+  <!-- Firebase Dashboard Logic -->
+  <script type="module" src="js/dashboard.js"></script>
+
+  <script>
+    // Sample Chart.js for System Stats
+    const ctx = document.getElementById('systemStatsChart').getContext('2d');
+    const systemStatsChart = new Chart(ctx, {
+      type: 'bar', // You can also use 'line', 'pie', etc.
+      data: {
+        labels: ['Users', 'Requests', 'Approved', 'Pending'],
+        datasets: [{
+          label: 'Count',
+          data: [12, 19, 7, 5], // Replace with dynamic values from Firebase
+          backgroundColor: ['#3B82F6','#10B981','#F59E0B','#EF4444'],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

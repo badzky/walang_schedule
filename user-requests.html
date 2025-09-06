@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Requests</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-xl font-bold">Auditing System - User</h1>
+    <div class="space-x-2">
+      <a href="user-dashboard.html" class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-sm">Home</a>
+      <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm">Logout</button>
+    </div>
+  </nav>
+
+  <div class="p-6 max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">User Requests</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Card 1: Submit Fund Request -->
+      <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">Submit Fund Request</h3>
+        <p class="text-gray-600 text-sm mb-3">Request a new fund with amount and reason.</p>
+        <form id="fundRequestForm" class="space-y-3">
+          <input type="number" id="fundAmount" placeholder="Enter Amount" class="w-full border p-2 rounded" required>
+          <textarea id="fundReason" placeholder="Enter Reason" class="w-full border p-2 rounded" required></textarea>
+          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full">
+            Submit Fund Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Card 2: My Fund Requests -->
+      <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">My Fund Requests</h3>
+        <p class="text-gray-600 text-sm mb-3">View the status of your submitted fund requests.</p>
+        <ul id="myFundRequests" class="space-y-2 max-h-80 overflow-y-auto border rounded p-2 bg-gray-50"></ul>
+      </div>
+
+      <!-- Card 3: Submit Resource Request -->
+      <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">Submit Resource Request</h3>
+        <p class="text-gray-600 text-sm mb-3">Request office supplies, equipment, or other resources.</p>
+        <form id="resourceRequestForm" class="space-y-3">
+          <input type="text" id="resourceName" placeholder="Enter Resource Name" class="w-full border p-2 rounded" required>
+          <textarea id="resourceReason" placeholder="Enter Purpose" class="w-full border p-2 rounded" required></textarea>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full">
+            Submit Resource Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Card 4: My Resource Requests -->
+      <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold mb-2">My Resource Requests</h3>
+        <p class="text-gray-600 text-sm mb-3">View the status of your resource requests.</p>
+        <ul id="myResourceRequests" class="space-y-2 max-h-80 overflow-y-auto border rounded p-2 bg-gray-50"></ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Firebase Logic -->
+  <script type="module" src="./js/user-requests.js"></script>
+</body>
+</html>

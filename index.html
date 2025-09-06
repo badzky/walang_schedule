@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Auditing System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <!-- Login Card -->
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-200">
+    
+    <!-- Logo / Title -->
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold text-green-600">Auditing System</h1>
+      <p class="text-sm text-gray-500 mt-1">Secure Login</p>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-5">
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" required 
+               placeholder="Enter your email"
+               class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm 
+                      focus:ring-green-500 focus:border-green-500 p-2">
+      </div>
+
+      <!-- Password with toggle -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Password</label>
+        <div class="relative">
+          <input type="password" id="password" required 
+                 placeholder="Enter your password"
+                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm 
+                        focus:ring-green-500 focus:border-green-500 p-2 pr-10">
+          <!-- Toggle Button -->
+          <button type="button" id="togglePassword" 
+                  class="absolute inset-y-0 right-3 flex items-center text-gray-500">
+            👁
+          </button>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" 
+              class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-semibold shadow">
+        Login
+      </button>
+    </form>
+
+    <!-- Register Link -->
+    <p class="text-center mt-5 text-sm">
+      Don’t have an account? 
+      <a href="register.html" class="text-green-600 hover:underline font-medium">Register</a>
+    </p>
+
+    <!-- Status Message -->
+    <p id="message" class="text-center mt-4 text-sm font-medium text-red-600"></p>
+  </div>
+
+  <!-- Firebase + Auth JS -->
+  <script type="module" src="js/auth.js"></script>
+
+  <!-- Password Toggle Script -->
+  <script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      const type = passwordField.type === "password" ? "text" : "password";
+      passwordField.type = type;
+    });
+  </script>
+</body>
+</html>
